@@ -1,24 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+//React
+import * as React from "react";
+// import { useEffect } from "react";
+
+//Redux
+// import { useDispatch } from "react-redux";
+
+//Route
+// import { Route, Routes } from "react-router-dom";
+
+//Component
+
+//Style
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import rtlPlugin from "stylis-plugin-rtl";
+import { prefixer } from "stylis";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import Registration from "./component/registration/Registration";
+// import { useNavigate } from "react-router-dom";
+
+const theme = createTheme({
+  direction: "rtl", // Both here and <body dir="rtl">
+});
+
+// Create rtl cache
+const cacheRtl = createCache({
+  key: "muirtl",
+  stylisPlugins: [prefixer, rtlPlugin],
+});
 
 function App() {
+  // const navigate = useNavigate();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
+        <div dir="rtl">
+          <Registration />
+          {/* <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/edit/:id" element={<Edit />} />
+          </Routes> */}
+        </div>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 
